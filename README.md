@@ -2,7 +2,7 @@ Nancy with Make & Mono
 ======================
 
 - Coded in Nancy
-- Compiled with Mono 2.10
+- Compiled with Mono 2.10.9
 - Built with Make 3.81
 - Hosted by a Self Contained EXE
 
@@ -15,7 +15,7 @@ Dependencies
 
 ### Make 3.81
 ### Nuget OR Nuget4Mono
-### Mono 2.10
+### Mono 2.10.9
 
 Usage
 -----
