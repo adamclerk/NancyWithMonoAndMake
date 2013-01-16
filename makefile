@@ -21,7 +21,7 @@ build: $(BIN_HOLDER) $(NUGET_HOLDER) $(HOST) $(ALL_SRC)
 
 $(HOST): $(ALL_SRC)
 	@echo "BUILDING $(@F)"
-	@$C -out:$(HOST) -lib:./src/bin -d:$(BUILDTYPE) -r:nancy.dll,nancy.hosting.self.dll $(ALL_SRC)
+	@$C -out:$(HOST) -lib:./src/bin -d:$(BUILDTYPE) -r:Nancy.dll,Nancy.Hosting.Self.dll $(ALL_SRC)
 
 $(BIN_HOLDER):
 	@echo "CREATING BIN FOLDER"
