@@ -37,8 +37,6 @@ $(NUGET_HOLDER):
 	@$(UZFIND)$(UZSED1)$(UZSED2)$(UZXARG)
 	@cp ./src/Packages/Nancy.0.15.1/lib/net40/Nancy.dll ./src/bin
 	@cp ./src/Packages/Nancy.Hosting.Self.0.15.1/lib/net40/Nancy.Hosting.Self.dll ./src/bin
-	@cp ./src/Packages/Nancy.ViewEngines.Razor.0.15.1/lib/net40/Nancy.ViewEngines.Razor.dll ./src/bin
-	@cp ./src/Packages/Nancy.ViewEngines.Razor.0.15.1/lib/net40/System.Web.Razor.dll ./src/bin
 	@touch $(NUGET_HOLDER)
 
 clean:
