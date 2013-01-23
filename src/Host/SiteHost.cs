@@ -1,12 +1,9 @@
 using System;
 using System.Linq;
 using System.Threading;
-using Model;
-using Module;
-using Helper;
 using Nancy.Hosting.Self;
 
-namespace SampleOSX
+namespace Host
 {
     class MainClass
     {

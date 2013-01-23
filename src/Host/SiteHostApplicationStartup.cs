@@ -9,7 +9,6 @@ namespace SampleOSX
     {
         public void Initialize(IPipelines pipelines)
         {
-            Console.WriteLine("Wiring up SiteHostApplicationStartup");
             pipelines.BeforeRequest += ctx => {
                 var reqDate = DateTime.Now;
                 var requestId = Guid.NewGuid().ToString();

@@ -1,7 +1,7 @@
-@Master['Layouts/Marketing']
-
-@Section['Content']
-
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+	Layout = "Views/Layouts/Bootstrap.cshtml";
+}
 <!-- Main hero unit for a primary marketing message or call to action -->
 <div class="hero-unit">
 	<h1>Self Hosted Nancy with Make</h1>
@@ -30,13 +30,13 @@
 </div>
 <div class="row">
 	<div class="span2">
-		<img class="thumbnail" src="http://www.gravatar.com/avatar/3d8145731dd041b1dda94424e142193a"/>
+		<img class="thumbnail" src="http://www.gravatar.com/avatar/@Model.GravatarHash"/>
 	</div>
 	<div class="span8">
 		<p>Hey,</p>
 		<p>My name is Adam.  Thanks for pulling down and running this code.</p>
 		<p>
-			I'm a software developer from Boise Idaho.  I love tackling big problems and creating elegant solutions.  That's why I love <a href='http://nancyfx.org/'>Nancy</a> so much. You can find me on twitter with @adamclerk.
+			I'm a software developer from Boise Idaho.  I love tackling big problems and creating elegant solutions.  That's why I love <a href='http://nancyfx.org/'>Nancy</a> so much. You can find me on twitter with @@adamclerk.
 		</p>
 	</div>
 </div>
@@ -44,5 +44,3 @@
 <footer>
 	<p>&copy; Company 2012</p>
 </footer>
-
-@EndSection
