@@ -18,9 +18,11 @@ Usage
 -----
 
 ```
-make clean
+% make clean
 
-make
+% make
 
-make run
+% make run
+
+% make run URL=http://localhost:8080
 ```
