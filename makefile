@@ -1,6 +1,7 @@
 C=dmcs
 BUILDTYPE=DEBUG
 SUBDIR=models helpers modules host
+URL=http://localhost.com:4444
 BIN=src/bin/
 HOST=src/bin/host.exe
 BINFOLDER=src/bin/holder.keep
@@ -101,7 +102,7 @@ clean:
 	
 run: build
 	@echo "RUNNING SITE"
-	@mono ./src/bin/host.exe
+	@mono ./src/bin/host.exe -e $(URL)
 
 config:
 	@echo "SYSREF:      $(SYSREF)"
