@@ -11,8 +11,9 @@ namespace Site
         {
             Get["/"] = _ => {
             	dynamic model = new ExpandoObject();
-            	model.GravatarHash = ConfigurationManager.AppSettings["GravatarHash"];
-            	model.User = new User(){FirstName = "Adam", LastName="Clark"};
+            	//model.GravatarHash = ConfigurationManager.AppSettings["GravatarHash"];
+                model.GravatarHash = "TEST";
+            	model.User = new User(){FirstName = "Adam", LastName="Clarke"};
             	return View["index", model];
             };
         }

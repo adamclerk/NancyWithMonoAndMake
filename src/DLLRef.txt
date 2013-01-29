@@ -1,4 +1,5 @@
 System.Xml.dll
 System.Configuration.dll
 pkg/Nancy.Viewengines.Razor___0.15.3/lib/net40/Nancy.Viewengines.Razor.dll
+pkg/Nancy.Viewengines.Razor___0.15.3/lib/net40/System.Web.Razor.dll
 pkg/Nancy___0.15.3/lib/net40/Nancy.dll

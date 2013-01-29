@@ -27,10 +27,8 @@ namespace Site
         protected override void ConfigureConventions(NancyConventions conventions)
         {
             base.ConfigureConventions(conventions);
-            #if DEBUG
             StaticConfiguration.DisableErrorTraces = false;
             StaticConfiguration.DisableCaches = true;
-            #endif
             conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("/css","/Content/css"));
             conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("/js", "/Content/js"));
             conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("/img", "/Content/img"));

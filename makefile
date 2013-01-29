@@ -1,7 +1,7 @@
 C=dmcs
 FLAGS=-debug -d:DEBUG -d:TRACE
 SUBDIR=models helpers modules host
-URL=http://localhost.com:4444
+URL=http://localhost:8888
 BIN=bin
 HOST=$(BIN)/host.exe
 SITEDLL=$(BIN)/site.dll
@@ -109,15 +109,15 @@ build: $(BINFOLDER) $(T_NUGET) $(BINDLLREF) $(SITEDLL) $(HOST) $(TESTDLL)
 
 $(SITEDLL): $(D_SITESRC) $(APPCONFIG) $(T_RES) $(HOST).config
 	@echo "BUILDING $(@F)"
-	$C $(FLAGS) -out:$(SITEDLL) -t:library $(P_SITEREF) $(P_RES) $(D_SITESRC)
+	@$C $(FLAGS) -out:$(SITEDLL) -t:library $(P_SITEREF) $(P_RES) $(D_SITESRC)
 
 $(TESTDLL): $(D_TESTSRC)
 	@echo "BUILDING $(@F)"
-	$C $(FLAGS) -out:$(TESTDLL) -t:library $(P_TESTREF) -r:$(SITEDLL) $(D_TESTSRC)
+	@$C $(FLAGS) -out:$(TESTDLL) -t:library $(P_TESTREF) -r:$(SITEDLL) $(D_TESTSRC)
 
 $(HOST): $(D_HOSTSRC)
 	@echo "BUILDING $(@F)"
-	$C $(FLAGS) -out:$(HOST) $(P_HOSTREF) $(D_HOSTSRC)
+	@$C $(FLAGS) -out:$(HOST) $(P_HOSTREF) $(D_HOSTSRC)
 
 $(HOST).config: $(APPCONFIG)
 	@echo "COPYING APPCONFIG"

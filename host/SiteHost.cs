@@ -11,11 +11,10 @@ namespace Host
     {
         public static void Main (string[] args)
         {
-            Console.WriteLine("IN MAIN");
             var curdir = Environment.CurrentDirectory;
             Assembly.LoadFile(curdir + "/bin/site.dll");
-
-            var ep = "http://localhost:4001";
+            
+            var ep = "http://localhost:8888";
             var daemon = false;
             var help = false;
 
@@ -45,6 +44,7 @@ namespace Host
             var host = new NancyHost(new Uri(ep));    
             host.Start();  // start hosting
             Console.WriteLine("Starting Site: " + ep);
+            Console.WriteLine("Press enter to stop");
 
             //Under mono if you deamonize a process a Console.ReadLine with cause an EOF 
             //so we need to block another way
@@ -58,6 +58,7 @@ namespace Host
             }
 
             host.Stop();
+                
             Console.WriteLine("Stopping Site");
         }
 
