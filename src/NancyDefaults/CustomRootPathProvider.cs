@@ -2,15 +2,14 @@ using System;
 using System.IO;
 using Nancy;
 
-namespace SampleOSX.Defaults
+namespace Site
 {
-    public class CustomRootPathProvider : IRootPathProvider
-    {
-        public string GetRootPath()
-        {
-            var dir = Directory.GetCurrentDirectory() + "/src";
-            //Console.WriteLine("Custom RootPath: " + dir);
-            return dir;
-        }
-    }
+	public class CustomRootPathProvider : IRootPathProvider
+	{
+	    public string GetRootPath()
+	    {
+	        var dir = Directory.GetCurrentDirectory() + "/src";
+	        return dir;
+	    }
+	}
 }

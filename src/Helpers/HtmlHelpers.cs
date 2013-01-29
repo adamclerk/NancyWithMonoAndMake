@@ -1,6 +1,6 @@
 using System;
 
-namespace HtmlHelpers
+namespace Site
 {
     public static class Img
     {

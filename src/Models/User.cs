@@ -1,10 +1,10 @@
 using System;
 
-namespace Model
+namespace Site
 {
-    public class User
-    {
-        public string FirstName { get;set;}
-        public string LastName {get;set;}
-    }    
+	public class User 
+	{
+		public string FirstName {get;set;}
+		public string LastName {get;set;}
+	}
 }

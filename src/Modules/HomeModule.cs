@@ -2,9 +2,8 @@ using System;
 using System.Configuration;
 using System.Dynamic;
 using Nancy;
-using Model;
 
-namespace Module.Marketing
+namespace Site
 {
     public class HomeModule : NancyModule
     {
