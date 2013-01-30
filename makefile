@@ -139,11 +139,15 @@ $(BINFOLDER):
 
 $(BINDLLREF): $(EXPLICITDLLREF) 
 	@echo "COPYING REFERENCED DLLS TO BIN"
-	@cp $? bin/
+	@cp $? bin
 
-$(BINTESTDLLREF):$(L_EXPLICITTESTREF)
+$(EXPLICITDLLREF):
+
+$(BINTESTDLLREF): $(L_EXPLICITTESTREF)
 	@echo "COPYING REFERENCED DLLS TO BIN/TEST"
-	@cp $? bin/test/
+	@cp $? bin/test
+
+$(L_EXPLICITTESTREF):
 
 nuget: $(T_NUGET)
 
@@ -165,7 +169,7 @@ clean:
 cleannuget:
 	@echo "CLEANING PACKAGES FOLDER"
 	@find $(PKG_DIR) -type f -name "*.nupkg" | xargs -I nupkg rm nupkg
-	@find $(PKG_DIR) -type d -path '$(PKG_DIR)/*' -maxdepth 1 | xargs -I nupkgdir rm -r nupkgdir
+	@find $(PKG_DIR) -maxdepth 1 -type d -path '$(PKG_DIR)/*' | xargs -I nupkgdir rm -r nupkgdir
 
 cleanall: clean cleannuget
 
