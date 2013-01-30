@@ -1,11 +1,11 @@
 C=dmcs
-FLAGS=-debug -d:DEBUG -d:TRACE
+FLAGS=-debug -d:DEBUG
 SUBDIR=models helpers modules host
 URL=http://localhost:8888
 BIN=bin
 HOST=$(BIN)/host.exe
 SITEDLL=$(BIN)/site.dll
-TESTDLL=$(BIN)/test.dll
+TESTDLL=$(BIN)/test/test.dll
 BINFOLDER=$(BIN)/holder.keep
 
 #########################
@@ -81,15 +81,22 @@ TESTREF=test/DLLRef.txt
 D_TESTREF=$(shell cat $(TESTREF) | tr '\n' ' ')
 L_EXPLICITTESTREF=$(filter pkg/%, $(D_TESTREF))
 L_SYSTESTREF=$(filter-out pkg/%, $(D_TESTREF))
+T_FILETESTREF=$(notdir $(L_EXPLICITTESTREF))
+T_TESTREF=$(patsubst %,bin/test/%, $(T_FILETESTREF))
+L_FINALTESTREF=$(L_SYSTESTREF) $(T_TESTREF)
+P_TESTREF=$(patsubst %,-r:%, $(L_FINALTESTREF))
 
 #########################
 #Combine Site Test Host #
 #########################
 DLLREF=$(sort $(D_HOSTREF) $(D_SITEREF) $(D_TESTREF))
 SYSDLLREF=$(sort $(L_SYSHOSTREF) $(L_SYSSITEREF $(L_SYSTESTREF))
-EXPLICITDLLREF=$(sort $(L_EXPLICITHOSTREF) $(L_EXPLICITSITEREF) $(L_EXPLICITTESTREF))
+EXPLICITDLLREF=$(sort $(L_EXPLICITHOSTREF) $(L_EXPLICITSITEREF))
 FILEDLLREF=$(notdir $(EXPLICITDLLREF))
 BINDLLREF=$(patsubst %,bin/%, $(FILEDLLREF))
+
+FILETESTDLLREF=$(notdir $(L_EXPLICITTESTREF))
+BINTESTDLLREF=$(patsubst %,bin/test/%, $(FILETESTDLLREF))
 
 #########################
 #      Nuget nupkg      #
@@ -105,7 +112,7 @@ APPCONFIG=src/App.config
 all: build
 	@echo "SOLUTION BUILT!"
 
-build: $(BINFOLDER) $(T_NUGET) $(BINDLLREF) $(SITEDLL) $(HOST) $(TESTDLL)
+build: $(BINFOLDER) $(T_NUGET) $(BINDLLREF) $(BINTESTDLLREF) $(SITEDLL) $(HOST) $(TESTDLL)
 
 $(SITEDLL): $(D_SITESRC) $(APPCONFIG) $(T_RES) $(HOST).config
 	@echo "BUILDING $(@F)"
@@ -117,7 +124,7 @@ $(TESTDLL): $(D_TESTSRC)
 
 $(HOST): $(D_HOSTSRC)
 	@echo "BUILDING $(@F)"
-	@$C $(FLAGS) -out:$(HOST) $(P_HOSTREF) $(D_HOSTSRC)
+	@$C $(FLAGS) -out:$(HOST) -r:$(SITEDLL) $(P_HOSTREF) $(D_HOSTSRC)
 
 $(HOST).config: $(APPCONFIG)
 	@echo "COPYING APPCONFIG"
@@ -127,11 +134,16 @@ $(BINFOLDER):
 	@echo "CREATING BIN FOLDER"
 	@mkdir -p $(BIN)
 	@mkdir -p $(BIN)/res
+	@mkdir -p $(BIN)/test
 	@touch $(BINFOLDER)
 
 $(BINDLLREF): $(EXPLICITDLLREF) 
 	@echo "COPYING REFERENCED DLLS TO BIN"
 	@cp $? bin/
+
+$(BINTESTDLLREF):$(L_EXPLICITTESTREF)
+	@echo "COPYING REFERENCED DLLS TO BIN/TEST"
+	@cp $? bin/test/
 
 nuget: $(T_NUGET)
 
@@ -147,12 +159,16 @@ $(T_RES): $(D_RESTXT)
 
 clean:
 	@echo "CLEANING PROJECT"
+	@rm -r bin
+	@mkdir -p bin
+
+cleannuget:
 	@echo "CLEANING PACKAGES FOLDER"
 	@find $(PKG_DIR) -type f -name "*.nupkg" | xargs -I nupkg rm nupkg
 	@find $(PKG_DIR) -type d -path '$(PKG_DIR)/*' -maxdepth 1 | xargs -I nupkgdir rm -r nupkgdir
-	@rm -r bin
-	@mkdir -p bin
-	
+
+cleanall: clean cleannuget
+
 run: build
 	@echo "RUNNING SITE"
 	@mono --debug bin/host.exe -e $(URL)
@@ -188,18 +204,10 @@ config:
 	@echo "T_HOSTREF: 		  $(T_HOSTREF)"
 	@echo "L_FINALHOSTREF:    $(L_FINALHOSTREF)"
 	@echo "P_HOSTREF:         $(P_HOSTREF)"
+	@echo "TEST ----------------------"
+	@echo "D_TESTREF:         $(D_TESTREF)"
+	@echo "L_EXPLICITTESTREF: $(L_EXPLICITTESTREF)"
+	@echo "L_SYSTESTREF:      $(L_SYSTESTREF)"
+	@echo "P_TESTREF:         $(P_TESTREF)"
 	@echo "----------------------"
-	@echo "SITEREF:           $(SITEREF)"
-	@echo "D_SITEREF:         $(D_SITEREF)"
-	@echo "T_SITEREF:         $(T_SITEREF)"
-	@echo "L_EXPLICITSITEREF: $(L_EXPLICITSITEREF)"
-	@echo "L_SYSSITEREF:      $(L_SYSSITEREF)"
-	@echo "L_FINALSITEREF:    $(L_FINALSITEREF)"
-	@echo "T_FILESITEREF:     $(T_FILESITEREF)"
-	@echo "P_SITEREF:         $(P_SITEREF)"
-	@echo "L_NUGET:           $(L_NUGET)"
-	@echo "TEMP_NUGET:        $(TEMP_NUGET)"
-	@echo "T_NUGET:           $(T_NUGET)"
-	@echo "PKG_CONFIG:        $(PKG_CONFIG)"
-	@echo "T_RES:             $(T_RES)"
-	@echo "P_RES:             $(P_RES)"
+
